@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    编写一个 times 函数，接收 2 个参数，一个字符串类型 str（如 "abc"），
+    一个是 Number 类型 num （如 3），返回一个字符串（这里是 "abcabcabc"）
+  </p>
+  <script>
+    // 1. 这是我的实现方法：
+    function times(str, num) {
+      return num == 1 ? str : str + times(str, num - 1);
+    }
+    console.log(times('abc', 4));
+
+    // 2. 看到的别人的实现方法, es6新增的方法
+    function times(str, num) {
+      return str.repeat(num);
+    }
+    console.log(times('abc', 4));
+
+    // 3. 数组的方法, 先创建一个空数组，然后用 str 将其拼接起来
+    function times(str, num) {
+      return new Array(num + 1).join(str);
+    }
+    console.log(times('abc', 4));
+
+  </script>
+</body>
+</html>
