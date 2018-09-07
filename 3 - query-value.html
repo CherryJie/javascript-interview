@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    如何获取 url 中的 query 字段对应的值
+    比如：https://m.mobike.com?source=part1
+
+    现在要编写一个函数获取 source 对应的值 part1
+  </p>
+  <script>
+    // 这里要注意的就是题目给的只是特殊的情况，一定要考虑多个 query 的情况。
+    function queryValue(url) {
+      let queryPart = url.split('?')[1];
+      let queryArr = queryPart.split('&');
+      let result = [];
+      for(let i=0; i < queryArr.length; i++) {
+        result.push(queryArr[i].split('=')[1]);
+      }
+      return result;
+    }
+    queryValue('https://m.mobike.com?source=part1&key=value');
+  </script>
+</body>
+</html>
