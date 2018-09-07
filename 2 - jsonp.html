@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    用 js 函数编写一个 jsonp 处理函数
+  </p>
+  <script>
+    // 这个题我完全是不会做，反思反思
+    function myCallback(data) {
+      console.log(data)
+    }
+    function jsonp(url, data, callback) {
+      // url, data, callback 三个参数，data 应该是可以不传的
+      // 判断 data 是不是string 如果是的话就表明这个参数是函数
+      if(typeof data === 'string') {
+        callback = data;
+        data = {};
+      }
+
+      // 然后来处理字符串的问题
+      // 判断 url 中有没有 query 项，即找问号
+      url += url.indexOf('?') < 0 ? '?' : '&';
+      // 拼接 callback 项
+      url += 'callback=' + callback;
+      // 拼接 data
+      let params = '';
+      for (let k in data) {
+        let value = data[k] !== undefined ? data[k] : '';
+        params += `&${k}=${value}`;
+      }
+
+      url += params;
+      // 在页面中插入 script 标签
+      let scripts = document.createElement('script');
+      scripts.setAttribute('src', url);
+      document.querySelector('head').appendChild(scripts);
+    } 
+    jsonp('http://baidu.com/index.html', { id: 34 }, 'myCallback')
+    jsonp('http://baidu.com/index.html?name="zjn"', { id: 34 }, 'myCallback')
+
+    // 这里科普一下 url 的组成，因为我自己每次老是记不住...
+    // http://10.1.192.66:8080/zentao/index.php?m=task&f=view&task=4640 
+    // protocol://hostname:port/path/?query&key=value
+    // 最后的请求参数，通过等号连接到path的后面，一般都是键值对一一对应，名和值用等号隔开，多个用 & 连接
+  </script>
+</body>
+</html>
