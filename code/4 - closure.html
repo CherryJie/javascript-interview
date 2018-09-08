@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    用闭包解决 for 循环问题
+  </p>
+  <script>
+    // 在 for 循环中，出现另一个函数，导致了作用域的改变
+    // 1. 错误版本
+    function count() {
+      var arr = [];
+      for(var i=0; i<3; i++) {
+        arr[i] = function() {
+          return i;
+        };
+      }
+      return arr;
+    }
+    console.log(count()[2]());
+    // 正确版本
+    function count2() {
+      var arr = [];
+      for(var i=0; i<3; i++) {
+        arr[i] = (function(num) {
+          return num;
+        }(i))
+      }
+      return arr;
+    }
+    console.log(count2());
+
+    // 2. 错误版本
+    function count1() {
+      for (var i = 0; i < 10; i++) {
+        setTimeout(function () {
+          console.log(new Date(), i);
+        }, 1000);
+      }
+    }
+    // 正确版本
+    function count3() {
+      for (var i = 0; i < 10; i++) {
+        (function(j) {
+          setTimeout(function(j) {
+            console.log(i);
+          }, 1000);
+        })(i);
+      }
+    }
+    count3();
+    // 还可以使用 let 来定义变量
+  </script>
+</body>
+</html>
