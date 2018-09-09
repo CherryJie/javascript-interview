@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    写一个构造函数，要求是实例化出来的每个对象的id属性实现自增
+  </p>
+  <script>
+    function AutoIncrease(name) {
+      this.name = name;
+      this.id = AutoIncrease.id++;
+    }
+    AutoIncrease.id = 0;
+    let auto1 = new AutoIncrease('1');
+    let auto2 = new AutoIncrease('2');
+    let auto3 = new AutoIncrease('3');
+
+    console.log(auto1);
+    console.log(auto2);
+    console.log(auto3);
+
+    function Foo() {
+      // this.name = name;
+      idIncrease = function() {
+        let id = 0;
+        return function() {
+          return id++;
+        }
+      };
+      this.id = idIncrease();
+    }
+
+    let foo1 = new Foo().id;
+    console.log(foo1());
+    console.log(foo1());
+  </script>
+</body>
+</html>
