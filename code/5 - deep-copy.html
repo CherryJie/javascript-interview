@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    深拷贝与浅拷贝的区别及实现方法
+  </p>
+  <script>
+    // 深拷贝和浅拷贝主要是针对 js 的引用类型而言，浅拷贝拷贝的是原对象的
+    // 引用，而深拷贝则是拷贝的一个新的实例，与原对象互不影响
+    // 浅拷贝：
+    // 1. 最简单的方法是直接赋值
+    var o1 = {
+      a: 1,
+    }
+    var o2 = o1;
+
+    // 2. Array.prototype.slice()
+    var a1 = ['darko', {
+      age: 22
+    }]
+    var a2 = o1.slice();
+
+    // 3. jQuery 中的 $.extend({}, obj);
+    // 4. 自己实现一个
+    function shadowCopy(source) {
+      if(!source || typeof source !== 'object') return source;
+      // 判断是数组还是对象
+      let targetObj = source.constructor === Array ? [] : {};
+      for(let key in source) {
+        if(source.hasOwnProperty(key)) {
+          targetObj[key] = source[key];
+        }
+      }
+      return targetObj;
+    }
+
+    // 深拷贝
+    // 1. 可以使用 $.extend(true, {}, ....)
+    // 2. JSON.parse(JSON.stringify(source));
+    // 3. 自己实现
+    function deepClone(source) {
+      if(!source || typeof source !== 'object') return source;
+      // 这里必须要判断一下他是数组还是对象；
+      let targetObj = source.constructor === Array ? [] : {};
+      for(let key in source) {
+        if(source.hasOwnProperty(key)) {
+          if(source[key] && typeof source[key] === 'object') {
+            targetObj[key] = source[key].constructor === Array ? [] : {};
+            targetObj[key] = deepClone(source[key]);
+          } else {
+            targetObj[key] = source[key];
+          }
+        }
+      }
+      return targetObj;
+    }
+  </script>
+</body>
+</html>
