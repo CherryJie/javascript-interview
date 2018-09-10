@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+    数组去重
+  </p>
+  <script>
+    // 1. es6 set 去重
+    function uniqueArray(arr) {
+      let uniqueArr = new Set(arr);
+      // 注意这里得到的并不是 Array, 
+      return Array.from(uniqueArr);
+    }
+
+    // es5
+    function uniqueArr(arr) {
+      let uniqueObj = {};
+      let uniqueArray = [];
+      for(let value of arr) {
+        if(!uniqueObj.hasOwnProperty(value)) {
+          uniqueObj[value] = 1;
+          uniqueArray.push(value);
+        }
+      }
+      return uniqueArray;
+    }
+
+    let array = [1, 2, 3, 4, 4, 4, 5];
+    console.log(uniqueArr(array));
+    console.log(uniqueArray(array));
+  </script>
+</body>
+</html>
